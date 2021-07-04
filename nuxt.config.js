@@ -1,7 +1,7 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'blog-site',
+        title: 'Personal Blog',
         htmlAttrs: {
             lang: 'en'
         },
@@ -24,7 +24,9 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '@/plugins/element-ui'
+        '@/plugins/element-ui',
+        '@/plugins/components.js',
+        '@/plugins/date-filter'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -35,16 +37,36 @@ export default {
 
     // Modules: https://go.nuxtjs.dev/config-modules
 
-    modules: [],
+    modules: [
+        '@nuxtjs/axios',
+    ],
+    axios: {
+        baseUrl: process.env.BASE_URL || 'https://blogsite-a2897-default-rtdb.asia-southeast1.firebasedatabase.app',
+        credentials: false
+    },
+
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
         transpile: [/^element-ui/],
     },
     loading: {
-        color: 'blue',
-        height: '5px'
-    }
+        color: 'green',
+        height: '5px',
+        failedcolor: 'red',
+        duration: 5000
+    },
+    env: {
+        baseUrl: process.env.BASE_URL || 'https://blogsite-a2897-default-rtdb.asia-southeast1.firebasedatabase.app',
+        webAPIKey: 'AIzaSyByFkZCRJpUQTR-ku78dsVCwZoi0JYxTtU'
+    },
+    transition: {
+        name: 'fade',
+
+    },
+    serverMiddleware: [
+
+    ]
 
 
 }

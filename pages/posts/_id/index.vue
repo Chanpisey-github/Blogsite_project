@@ -1,37 +1,34 @@
 <template>
-    <div class="single-post-page">
-    <section>
-        <h1 class="post-title">{{loadedPost.title}}</h1>
-        <div class="post-details">
-              <div class="post-details">Last Updated: {{loadedPost.updateDate}}</div>
-              <div class="post-details">Written: {{loadedPost.author}} </div>
-        </div>
-        <p>{{loadedPost.content}}</p>
-        </section>
-        <section class="post-feedback">  
-            <p>Let me know what you think about the post, send a mail to<a href="#">#</a>.</p>
-        </section>
-        </div>
+  <div class="single-post-page">
+    <section class="post">
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
+      <div class="post-details">
+        <div class="post-detail">Last updated:  {{ loadedPost.updatedDate | date }}</div>
+        <div class="post-detail">Written by {{ loadedPost.author }}</div>
+      </div>
+      <p class="post-content">{{ loadedPost.content }}</p>
+    </section>
+    <section class="post-feedback">
+      <p>Let me know what you think about the post, send a mail to <a href="#"></a>.</p>
+    </section>
+  </div>
 </template>
 
 <script>
 export default {
-  asyncData(context, callback){
-    setTimeout(()=>{
-      callback(null,{
-        loadedPost: {
-          id: "1", 
-          title: "The First Post (ID: "+context.route.params.id+")" ,
-          previewText: "Hello world",
-          author: "Pisey",
-          updateDate: new Date(),
-          content: 'The New update in single page! ',
-          thumbnail: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png"
+  asyncData(context) {
+    return context.app.$axios.$get('/posts/' + context.params.id + '.json')
+      .then(data => {
+        return {
+          loadedPost: data
         }
-      });
-    },1000);
-}
-}
+      })
+      .catch(e => context.error(e))
+  },
+  head: {
+    title: 'A Blog Post'
+  }
+};
 </script>
 
 
